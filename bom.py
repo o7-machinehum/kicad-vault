@@ -11,8 +11,8 @@ import sys
 sys.path.append('/usr/share/kicad/plugins/')
 import kicad_netlist_reader
 
-def generate_csv(prj, part_num):
-    os.system(f"kicad-cli sch export python-bom {prj}")
+def generate_csv(prj, output, part_num):
+    os.system(f"kicad-cli sch export python-bom {prj} --output bom.xml")
     os.environ['DIGIKEY_STORAGE_PATH'] = '.'
 
     # Generate an instance of a generic netlist, and load the netlist tree from
@@ -22,9 +22,9 @@ def generate_csv(prj, part_num):
     # Open a file to write to, if the file cannot be opened output to stdout
     # instead
     try:
-        f = open(f"bom.csv", 'w')
+        f = open(f"{output}", 'w')
     except IOError:
-        e = "Can't open output file for writing: " + "bom.csv"
+        e = "Can't open output file for writing: " + f"{output}"
         print(__file__, ":", e, sys.stderr)
         f = sys.stdout
 
@@ -78,3 +78,7 @@ def generate_csv(prj, part_num):
         out.writerow(row)
 
     os.remove("bom.xml")
+
+if __name__ == "__main__":
+    generate_csv("../ovrdrive/ee/ovrdrive/ovrdrive.kicad_sch ",
+        "http/boms/ovrdrive.csv", "MPN")

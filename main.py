@@ -1,5 +1,44 @@
 import bom
+import pdb
+from pathlib import Path
+import os
+from http.server import HTTPServer, CGIHTTPRequestHandler
 
 prj = "/home/machinehum/projects/id01/ee/trackpad_pcb_cs/trackpad.kicad_sch --output bom.xml"
 part_num = "MPN"
-bom.generate_csv(prj, part_num)
+srv = "http"
+
+try:
+    os.mkdir(srv)
+    os.mkdir(f"{srv}/boms")
+except(FileExistsError):
+    pass
+
+
+files = []
+try:
+    f = open(f"{srv}/prj.txt", "r")
+    files = f.read().split("\n")
+except(FileNotFoundError):
+    for path in Path('../').rglob('*.kicad_sch'):
+        k = input(f"{str(path)} Add this project? (Y/n): ")
+        if k == "y" or k == "Y":
+            files.append(str(path))
+    f = open(f"{srv}/prj.txt", "w")
+    for i in files:
+        f.write(f"{i}\n")
+    f.close()
+
+files = dict.fromkeys(files)
+with open(f"{srv}/index.html", "w") as f:
+    # Create links
+    for file in files:
+        k = file.split("/")[-1].split(".")[0]
+        files[file] = {"html": f"boms/{k}.html", "csv": f"boms/{k}.csv"}
+        f.write(f'<a href="{files[file]}">{file}</a>.<br>\n')
+        bom.generate_csv(f"{file}", files[file]["csv"], part_num)
+
+
+# os.chdir('http')
+# server_object = HTTPServer(server_address=('', 3000), RequestHandlerClass=CGIHTTPRequestHandler)
+# server_object.serve_forever()
