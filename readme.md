@@ -6,7 +6,7 @@ Start [here](https://developer.digikey.com/) to get some digikey api credentials
 
 Install digikey python api.
 ``` bash
-pip install digikey-api
+pip install digikey-api python-tabulate
 ```
 
 Install and setup environment variables. Leave this in your bashrc.

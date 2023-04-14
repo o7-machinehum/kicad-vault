@@ -4,7 +4,6 @@ from pathlib import Path
 import os
 from http.server import HTTPServer, CGIHTTPRequestHandler
 
-prj = "/home/machinehum/projects/id01/ee/trackpad_pcb_cs/trackpad.kicad_sch --output bom.xml"
 part_num = "MPN"
 srv = "http"
 
@@ -29,13 +28,14 @@ except(FileNotFoundError):
         f.write(f"{i}\n")
     f.close()
 
+# Create index.html and all bom files
 files = dict.fromkeys(files)
 with open(f"{srv}/index.html", "w") as f:
     # Create links
     for file in files:
         k = file.split("/")[-1].split(".")[0]
         files[file] = {"html": f"boms/{k}.html", "csv": f"boms/{k}.csv"}
-        f.write(f'<a href="{files[file]}">{file}</a>.<br>\n')
+        f.write(f'<a href="{files[file]["html"]}">{file}</a><br>\n')
         bom.generate_csv(f"{file}", files[file]["csv"], part_num)
 
 
