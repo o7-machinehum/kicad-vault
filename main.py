@@ -3,6 +3,7 @@ import pdb
 from pathlib import Path
 import os
 from http.server import HTTPServer, CGIHTTPRequestHandler
+import html_gen
 
 part_num = "MPN"
 srv = "http"
@@ -36,7 +37,9 @@ with open(f"{srv}/index.html", "w") as f:
         k = file.split("/")[-1].split(".")[0]
         files[file] = {"html": f"boms/{k}.html", "csv": f"boms/{k}.csv"}
         f.write(f'<a href="{files[file]["html"]}">{file}</a><br>\n')
-        bom.generate_csv(f"{file}", files[file]["csv"], part_num)
+        bom.generate_csv(f"{file}", srv + "/" + files[file]["csv"], part_num)
+        html_gen.csv_to_html(srv + "/" + files[file]["csv"],
+            srv + "/" + files[file]["html"])
 
 
 # os.chdir('http')

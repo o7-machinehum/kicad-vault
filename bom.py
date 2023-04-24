@@ -32,7 +32,7 @@ def generate_csv(prj, output, part_num):
     out = csv.writer(f, lineterminator='\n', delimiter=',', quotechar='\"', quoting=csv.QUOTE_ALL)
 
     # Which prices are you interested in
-    price_brackets = {1:"", 10:""}
+    price_brackets = {1:"", 10:"", 100:"", 500:"", 1000:""}
     header = ["Ref", "Qnty", "Value", "Footprint", "Part Number",
         "Detailed Description", "QTD Available"]
 
