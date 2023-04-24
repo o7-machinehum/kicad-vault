@@ -1,7 +1,5 @@
-# Kicad Vault
-Kicad Vault is a Python based part management systems. It will automatically hunt for KiCad projects and generate a webserver highlighting components, their current prices and availability. It is currently only available with digikey integration.
-
 ![](img/logo.png)
+Kicad Vault is a Python based part management systems. It will automatically hunt for KiCad projects and generate a webserver highlighting components, their current prices and availability. It is currently only available with digikey integration.
 
 ## Getting setup
 Start [here](https://developer.digikey.com/) to get some digikey api credentials.
