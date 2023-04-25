@@ -8,11 +8,20 @@ import pdb
 import csv
 import sys
 
-sys.path.append('/usr/share/kicad/plugins/')
+if sys.platform.startswith("linux"):
+    sys.path.append('/usr/share/kicad/plugins/')
+    KICAD_CLI = 'kicad-cli'
+elif sys.platform == "darwin":
+    sys.path.append('/Applications/KiCad/KiCad.app/Contents/SharedSupport/plugins/')
+    sys.path.append(os.path.expanduser('~/Documents/KiCad/6.0/scripting/plugins'))
+    KICAD_CLI = '/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli'
+elif os.name == "nt":
+    raise NotImplementedError
+
 import kicad_netlist_reader
 
 def generate_csv(prj, output, part_num):
-    os.system(f"kicad-cli sch export python-bom {prj} --output bom.xml")
+    os.system(f"{KICAD_CLI} sch export python-bom {prj} --output bom.xml")
     os.environ['DIGIKEY_STORAGE_PATH'] = '.'
 
     # Generate an instance of a generic netlist, and load the netlist tree from
@@ -80,5 +89,5 @@ def generate_csv(prj, output, part_num):
     os.remove("bom.xml")
 
 if __name__ == "__main__":
-    generate_csv("../ovrdrive/ee/ovrdrive/ovrdrive.kicad_sch ",
+    generate_csv("../ovrdrive/ee/ovrdrive/ovrdrive.kicad_sch",
         "http/boms/ovrdrive.csv", "MPN")
