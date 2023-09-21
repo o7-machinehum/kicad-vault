@@ -1,4 +1,0 @@
-xmltodict
-tabulate
-digikey-api
-pandas
