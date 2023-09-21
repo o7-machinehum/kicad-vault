@@ -15,8 +15,8 @@ elif sys.platform == "darwin":
     sys.path.append('/Applications/KiCad/KiCad.app/Contents/SharedSupport/plugins/')
     sys.path.append(os.path.expanduser('~/Documents/KiCad/6.0/scripting/plugins'))
     KICAD_CLI = '/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli'
-elif os.name == "nt":
-    raise NotImplementedError
+else:
+    KICAD_CLI = 'kicad-cli'
 
 import kicad_netlist_reader
 
