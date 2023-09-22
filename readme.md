@@ -15,6 +15,6 @@ export DIGIKEY_CLIENT_SECRET'="client_secret"
 ## Running
 ``` bash
 pip install kicad-vault
-kicad-vault <your_file>.kicad_sch --part-name MPN
+kicad-vault <your_file>.kicad_sch --field MPN
 ```
 Where "MPN" is the field in KiCad where you give the part number.
