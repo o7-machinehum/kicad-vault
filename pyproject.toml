@@ -18,7 +18,8 @@ dependencies = [
     "xmltodict",
     "tabulate",
     "digikey-api",
-    "pandas"
+    "pandas",
+    "argparse"
 ]
 
 [project.urls]
